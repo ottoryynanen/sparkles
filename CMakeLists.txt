@@ -59,3 +59,8 @@ if(QT_VERSION_MAJOR EQUAL 6)
     qt_import_qml_plugins(sparkles)
     qt_finalize_executable(sparkles)
 endif()
+
+install(TARGETS sparkles
+    DESTINATION "/usr/bin"
+)
+  
