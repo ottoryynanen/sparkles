@@ -24,9 +24,15 @@ Pane {
             id: magnitudeEntry
             width: 200
             height: 50
+            placeholderText: uiProperties.magnitude
             verticalAlignment: Text.AlignVCenter
             inputMethodHints: Qt.ImhDigitsOnly
             onAccepted: uiProperties.magnitude = text
+            onFocusChanged: {
+                if (!focus) {
+                    uiProperties.magnitude = text
+                }
+            }
         }
         Label {
             text: "Lifespan (1000 - 5000):"
@@ -36,9 +42,15 @@ Pane {
             id: lifespanEntry
             width: 200
             height: 50
+            placeholderText: uiProperties.lifeSpan
             verticalAlignment: Text.AlignVCenter
             inputMethodHints: Qt.ImhDigitsOnly
-            onAccepted: uiProperties.lifespan = text
+            onAccepted: uiProperties.lifeSpan = text
+            onFocusChanged: {
+                if (!focus) {
+                    uiProperties.lifeSpan = text
+                }
+            }
         }
     }
     Particles {
@@ -74,6 +86,12 @@ Pane {
                     duration: 250
                     easing.type: Easing.InOutQuad
                 }
+            }
+        }
+        onActiveChanged: {
+            if (!active) {
+                uiProperties.lifeSpan = parseInt(lifespanEntry.text)
+                uiProperties.magnitude = parseInt(magnitudeEntry.text)
             }
         }
     }

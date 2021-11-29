@@ -20,7 +20,7 @@ Rectangle {
             x: parent.width/2
             y: 2*parent.height/3
             emitRate: 1000
-            lifeSpan: uiProperties.lifespan
+            lifeSpan: uiProperties.lifeSpan
             enabled: false
             velocity: AngleDirection{magnitude: particleMagnitude ; angleVariation: 360}
             size: particleSize
@@ -29,12 +29,12 @@ Rectangle {
     }
     MouseArea {
         anchors.fill: parent
-        onPressed: {
+        onPressed: (mouse)=> {
             pulseEmitter.x = mouse.x;
             pulseEmitter.y = mouse.y;
             pulseEmitter.enabled = true;
         }
-        onPositionChanged: {
+        onPositionChanged: (mouse)=> {
             pulseEmitter.x = mouse.x;
             pulseEmitter.y = mouse.y;
         }
