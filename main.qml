@@ -1,7 +1,9 @@
+// Copyright (C) 2026 The Qt Company Ltd.
+// SPDX-License-Identifier: LicenseRef-Qt-Commercial OR BSD-3-Clause
+
 import QtQuick
 import QtQuick.Window
 import QtQuick.Controls 2.2
-import QtQuick.VirtualKeyboard
 
 Pane {
     id: window
@@ -27,10 +29,10 @@ Pane {
             placeholderText: uiProperties.magnitude
             verticalAlignment: Text.AlignVCenter
             inputMethodHints: Qt.ImhDigitsOnly
-            onAccepted: uiProperties.magnitude = text
+            onAccepted: uiProperties.magnitude = parseInt(magnitudeEntry.text)
             onFocusChanged: {
                 if (!focus) {
-                    uiProperties.magnitude = text
+                    uiProperties.magnitude = parseInt(magnitudeEntry.text)
                 }
             }
         }
@@ -45,11 +47,17 @@ Pane {
             placeholderText: uiProperties.lifeSpan
             verticalAlignment: Text.AlignVCenter
             inputMethodHints: Qt.ImhDigitsOnly
-            onAccepted: uiProperties.lifeSpan = text
+            onAccepted: uiProperties.lifeSpan = parseInt(lifespanEntry.text)
             onFocusChanged: {
                 if (!focus) {
-                    uiProperties.lifeSpan = text
+                    uiProperties.lifeSpan = parseInt(lifespanEntry.text)
                 }
+            }
+        }
+        Button {
+            text: "Crash"
+            onClicked: {
+                uiProperties.crash()
             }
         }
     }
@@ -59,41 +67,6 @@ Pane {
         anchors.bottom: parent.bottom
         anchors.left: parent.left
         anchors.right: parent.right
-    }
-
-    InputPanel {
-        id: inputPanel
-        z: 99
-        x: 0
-        y: window.height
-        width: window.width
-
-        states: State {
-            name: "visible"
-            when: inputPanel.active
-            PropertyChanges {
-                target: inputPanel
-                y: window.height - inputPanel.height
-            }
-        }
-        transitions: Transition {
-            from: ""
-            to: "visible"
-            reversible: true
-            ParallelAnimation {
-                NumberAnimation {
-                    properties: "y"
-                    duration: 250
-                    easing.type: Easing.InOutQuad
-                }
-            }
-        }
-        onActiveChanged: {
-            if (!active) {
-                uiProperties.lifeSpan = parseInt(lifespanEntry.text)
-                uiProperties.magnitude = parseInt(magnitudeEntry.text)
-            }
-        }
     }
     Component.onCompleted: {
         uiProperties.screenHeight = Screen.height

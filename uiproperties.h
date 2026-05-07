@@ -1,3 +1,6 @@
+// Copyright (C) 2026 The Qt Company Ltd.
+// SPDX-License-Identifier: LicenseRef-Qt-Commercial OR BSD-3-Clause
+
 #ifndef UIPROPERTIES_H
 #define UIPROPERTIES_H
 
@@ -14,6 +17,7 @@ class UiProperties : public QObject
     Q_PROPERTY(int screenWidth READ getScreenWidth WRITE setScreenWidth NOTIFY screenWidthChanged)
 public:
     explicit UiProperties(QObject *parent = nullptr);
+    Q_INVOKABLE void crash();
     int getMinimum() const;
     int getMaximum() const;
     int getMagnitude() const;
@@ -34,6 +38,7 @@ signals:
     void screenWidthChanged(int);
 
 private:
+    QVector<int> *m_testArray;
     int m_magnitude;
     int m_lifeSpan;
     int m_screenHeight;
